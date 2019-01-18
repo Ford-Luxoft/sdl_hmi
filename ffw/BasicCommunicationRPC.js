@@ -77,6 +77,7 @@ FFW.BasicCommunication = FFW.RPCObserver
       onAppUnregisteredNotification: 'BasicCommunication.OnAppUnregistered',
       onSDLCloseNotification: 'BasicCommunication.OnSDLClose',
       onResumeAudioSourceNotification: 'BasicCommunication.OnResumeAudioSource',
+      onServiceUpdateNotification: 'BasicCommunication.OnServiceUpdate',
       /**
        * init object
        */
@@ -283,13 +284,20 @@ FFW.BasicCommunication = FFW.RPCObserver
       onRPCNotification: function(notification) {
         Em.Logger.log('FFW.BasicCommunicationRPC.onRPCNotification');
         this._super();
+        if (notification.method == this.onServiceUpdateNotification) {
+          SDL.ServiceUpdatePopUp.activate(notification.params.serviceType,
+            notification.params.serviceEvent,
+            notification.params.reason);
+        }
         if (notification.method == this.onFileRemovedNotification) {
           SDL.SDLModel.onFileRemoved(notification.params);
         }
         if (notification.method == this.onStatusUpdateNotification) {
-          SDL.PopUp.create().appendTo('body').popupActivate(
-            'onStatusUpdate Notification: ' + notification.params.status
-          );
+          if(!SDL.ServiceUpdatePopUp.active) {
+            SDL.PopUp.create().appendTo('body').popupActivate(
+              'onStatusUpdate Notification: ' + notification.params.status
+            );
+          }
           var messageCode = '';
           switch (notification.params.status) {
             case 'UP_TO_DATE':
