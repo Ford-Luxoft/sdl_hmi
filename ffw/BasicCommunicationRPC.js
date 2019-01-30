@@ -56,6 +56,7 @@ FFW.BasicCommunication = FFW.RPCObserver
       onSDLCloseSubscribeRequestID: -1,
       onSDLConsentNeededSubscribeRequestID: -1,
       onResumeAudioSourceSubscribeRequestID: -1,
+      onServiceUpdateNotificationSubscribeRequestID: -1,
       onPutFileUnsubscribeRequestID: -1,
       onStatusUpdateUnsubscribeRequestID: -1,
       onAppPermissionChangedUnsubscribeRequestID: -1,
@@ -66,6 +67,7 @@ FFW.BasicCommunication = FFW.RPCObserver
       onSDLCloseUnsubscribeRequestID: -1,
       onSDLConsentNeededUnsubscribeRequestID: -1,
       onResumeAudioSourceUnsubscribeRequestID: -1,
+      onServiceUpdateNotificationUnsubscribeRequestID: -1,
       // const
       onStatusUpdateNotification: 'SDL.OnStatusUpdate',
       onAppPermissionChangedNotification: 'SDL.OnAppPermissionChanged',
@@ -125,6 +127,9 @@ FFW.BasicCommunication = FFW.RPCObserver
           .subscribeToNotification(this.onSDLConsentNeededNotification);
         this.onResumeAudioSourceSubscribeRequestID = this.client
           .subscribeToNotification(this.onResumeAudioSourceNotification);
+        this.onServiceUpdateNotificationSubscribeRequestID = this.client
+          .subscribeToNotification(this.onServiceUpdateNotification);
+        this
         setTimeout(function() {
           FFW.BasicCommunication.OnSystemTimeReady();
         }, 500);
@@ -158,6 +163,8 @@ FFW.BasicCommunication = FFW.RPCObserver
           .unsubscribeFromNotification(this.onSDLConsentNeededNotification);
         this.onResumeAudioSourceUnsubscribeRequestID = this.client
           .unsubscribeFromNotification(this.onResumeAudioSourceNotification);
+        this.onServiceUpdateNotificationUnsubscribeRequestID = this.client
+          .unsubscribeFromNotification(this.onServiceUpdateNotification);
       },
       /**
        * Client disconnected.
