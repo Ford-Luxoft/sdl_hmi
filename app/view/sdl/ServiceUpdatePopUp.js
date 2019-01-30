@@ -101,8 +101,8 @@ SDL.ServiceUpdatePopUp = Em.ContainerView.create(
       switch (serviceEvent) {
         case 'REQUEST_RECEIVED': {
           this.setContentByServiceType(serviceType);
-          this.set('progress', true);
-          this.set('active', true);
+          this.set('progress', this.get('content') != '');
+          this.set('active', this.get('content') != '');
           break;
         }
         case 'REQUEST_ACCEPTED': {
@@ -149,6 +149,10 @@ SDL.ServiceUpdatePopUp = Em.ContainerView.create(
         }
         case 'AUDIO': {
           this.set('content', 'Starting Audio Stream');
+          break;
+        }
+        case 'RPC': {
+          this.set('content', 'Starting RPC Service');
           break;
         }
         default: break;
